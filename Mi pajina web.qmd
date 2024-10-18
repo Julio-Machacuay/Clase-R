@@ -1,6 +1,4 @@
 ---
-
----
 title: "Pagina Web"
 author: "Julio Machacuay Pintado"
 format: html

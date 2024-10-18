@@ -1,9 +1,0 @@
-"0","library (ggplot2)"
-"0",""
-"0",""
-"0","ggplot(datos, aes(x = factor (geno), y =lfa, fill = factor (riego))) + "
-"0","geom_boxplot()+"
-"0","labs(title = ""box plot de lfa por genotipo"", x = ""genotipo"", y = ""lfa"") +"
-"0","  theme_minimal()"
-"2","Error: objeto 'datos' no encontrado
-"

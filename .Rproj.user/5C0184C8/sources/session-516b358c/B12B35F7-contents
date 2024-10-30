@@ -1,6 +1,6 @@
 ---
-title: "Pagina Web"
-author: "Julio Machacuay Pintado"
+title: "Florida_web"
+author: "Cristian Ruben Florida Garcia"
 format: html
 editor: visual
 output-file: index
@@ -27,32 +27,55 @@ You can add options to executable code like this
 
 The `echo: false` option disables the printing of code (only output is displayed).
 
-#leer datos
+#FB
 
 ```{r}
 library(readxl)
-datos_R <- read_excel("C:/Users/HP/Downloads/R/datos R.xlsx")
-View(datos_R)
+
+data <- read_excel("eficiencia de riego papa.xlsx")
+head(data)
 ```
 
-1.  Modelo lineal
+# Modelo lineal
 
 ```{r}
-modelo <- lm(formula = lfa ~block + geno + riego + riego*geno, data = datos_R)
-anova (modelo)
+modelo <- lm(formula = lfa ~ block + geno + riego + riego*geno, data = data)
+ 
+
+anova(modelo)
+
 ```
 
-# Gráfica con ggplot
+# Blox plot
 
 ```{r}
+  install.packages("ggplot2", repos = "https://cloud.r-project.org/")
+
 library (ggplot2)
-ggplot(datos_R, aes(x = factor (geno), y =lfa, fill = factor (riego))) + 
-geom_boxplot()+
-labs(title = "box plot de lfa por genotipo", x = "genotipo", y = "lfa") +
+ggplot(data, aes(x = block, y = lfa, fill = block)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2) +  # Personaliza los outliers
+  geom_jitter(width = 0.2, alpha = 0.5) +  # Añade puntos de datos con un poco de dispersión
+  labs(title = "Box Plot de lfa por Block", x = "Block", y = "lfa") +
   theme_minimal()
+
 ```
 
-# Comparación de medias
+#Grafico
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+## 2- Comparación de medias
+
+```{r}
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+install.packages("agricolae")
+```
 
 ```{r}
 library(agricolae)
@@ -89,7 +112,7 @@ mc <- tukey_interaccion$groups%>%
 str(mc)
 ```
 
-## Gráfica con GGPLot
+## Gráfica en ggplot 2
 
 ```{r}
 ggplot(mc, aes(x = geno, y = lfa, fill = riego)) + 
@@ -100,10 +123,9 @@ ggplot(mc, aes(x = geno, y = lfa, fill = riego)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-# Comparación de medias: emmeans
+## Comparación de Medias: emmeans
 
 ```{r}
-
 library(emmeans)
 mc <- emmeans(modelo, ~ riego * geno)
 mc <- emmeans(modelo, ~ riego | geno)
@@ -111,9 +133,10 @@ mc <- emmeans(modelo, ~ geno | riego) %>%
   as.data.frame()
 
 mc
+
 ```
 
-## Plot
+### Plot
 
 ```{r}
 ggplot(mc, aes(x = geno, y = emmean, fill = riego)) +
@@ -121,4 +144,7 @@ ggplot(mc, aes(x = geno, y = emmean, fill = riego)) +
   labs(x = "Variedad", y = "LFA", fill = "Riego") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{}
 ```
